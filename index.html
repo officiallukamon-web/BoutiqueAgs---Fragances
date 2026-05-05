@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boutique.Ags — El Arte de la Fragancia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --alabaster: #F9F9F7;
+      --pearl: #E5E3DF;
+      --champagne: #F2E8DF;
+      --obsidian: #1A1A1A;
+      --gold: #C9A96E;
+      --gold-light: #E8D5B0;
+      --mist: rgba(201, 169, 110, 0.12);
+      --wa: #25D366;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--alabaster);
+      color: var(--obsidian);
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* === PARTICLES === */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      animation: float-particle linear infinite;
+    }
+
+    @keyframes float-particle {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.4;
+      }
+
+      90% {
+        opacity: 0.2;
+      }
+
+      100% {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      height: 70px;
+      background: rgba(249, 249, 247, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--pearl);
+      transition: all 0.4s ease;
+    }
+
+    nav.scrolled {
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--obsidian);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--obsidian);
+      opacity: 0.7;
+      transition: opacity 0.25s, color 0.25s;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+      color: var(--gold);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.3rem;
+      transition: transform 0.2s;
+    }
+
+    .cart-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -4px;
+      right: -6px;
+      background: var(--gold);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .cart-count.pulse {
+      animation: cart-pulse 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes cart-pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.8);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* === HERO === */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 70px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 70% 50%, rgba(201, 169, 110, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(242, 232, 223, 0.6) 0%, transparent 60%),
+        var(--alabaster);
+      z-index: 0;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: orb-float 8s ease-in-out infinite;
+    }
+
+    .hero-orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(201, 169, 110, 0.15), transparent 70%);
+      right: 5%;
+      top: 10%;
+    }
+
+    .hero-orb-2 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(242, 232, 223, 0.8), transparent 70%);
+      left: 10%;
+      bottom: 20%;
+      animation-delay: -4s;
+    }
+
+    @keyframes orb-float {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-30px) scale(1.05);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 800px;
+      padding: 0 2rem;
+      animation: hero-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes hero-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      animation: hero-reveal 1.2s 0.2s both;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      animation: hero-reveal 1.2s 0.3s both;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--obsidian);
+      opacity: 0.55;
+      max-width: 450px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+      animation: hero-reveal 1.2s 0.4s both;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: hero-reveal 1.2s 0.5s both;
+    }
+
+    .btn-primary {
+      background: var(--obsidian);
+      color: var(--alabaster);
+      border: none;
+      padding: 0.85rem 2.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201, 169, 110, 0.3);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--obsidian);
+      border: 1px solid rgba(26, 26, 26, 0.25);
+      padding: 0.85rem 2.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: hero-reveal 1.2s 0.8s both;
+    }
+
+    .hero-scroll-hint span {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scroll-line 2s ease-in-out infinite;
+    }
+
+    @keyframes scroll-line {
+
+      0%,
+      100% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scaleY(0.5);
+        opacity: 0.3;
+      }
+    }
+
+    /* === SECTION HEADER === */
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+    }
+
+    .section-title em {
+      font-style: italic;
+    }
+
+    /* === CONCENTRATION GUIDE === */
+    .guide-section {
+      padding: 7rem 3rem;
+      background: var(--champagne);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .guide-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='%23C9A96E' opacity='0.15'/%3E%3C/svg%3E");
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .guide-card {
+      background: var(--alabaster);
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .guide-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .guide-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .guide-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.07);
+    }
+
+    .guide-type {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .guide-concentration {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .guide-bar-wrap {
+      height: 3px;
+      background: var(--pearl);
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+
+    .guide-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-light), var(--gold));
+      border-radius: 2px;
+      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .guide-desc {
+      font-size: 0.72rem;
+      line-height: 1.7;
+      opacity: 0.65;
+    }
+
+    .guide-hours {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--gold);
+      margin-top: 1rem;
+    }
+
+    /* === CATALOG SECTION === */
+    .catalog-section {
+      padding: 7rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+      margin-bottom: 4rem;
+      border: 1px solid var(--pearl);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 4rem;
+    }
+
+    .filter-tab {
+      flex: 1;
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s;
+      color: var(--obsidian);
+      opacity: 0.5;
+    }
+
+    .filter-tab.active {
+      background: var(--obsidian);
+      color: var(--alabaster);
+      opacity: 1;
+    }
+
+    .filter-tab:hover:not(.active) {
+      opacity: 1;
+      background: var(--champagne);
+    }
+
+    .brand-filter {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .brand-tag {
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--pearl);
+      background: transparent;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--obsidian);
+      opacity: 0.6;
+    }
+
+    .brand-tag:hover,
+    .brand-tag.active {
+      opacity: 1;
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .brand-tag.active {
+      background: var(--mist);
+    }
+
+    /* Product grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    .product-card {
+      background: var(--alabaster);
+      border: 1px solid var(--pearl);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+    }
+
+    .product-img-wrap {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--champagne) 0%, var(--pearl) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), transparent 60%);
+    }
+
+    .product-icon {
+      font-size: 4rem;
+      filter: drop-shadow(0 8px 20px rgba(201, 169, 110, 0.3));
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .product-card:hover .product-icon {
+      transform: scale(1.15) rotate(-3deg);
+    }
+
+    .product-gender-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      background: var(--obsidian);
+      color: var(--alabaster);
+    }
+
+    .product-gender-badge.dama {
+      background: var(--gold);
+      color: white;
+    }
+
+    .product-conc-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      padding: 0.3rem 0.6rem;
+      background: rgba(249, 249, 247, 0.9);
+      color: var(--gold);
+      border: 1px solid var(--gold-light);
+      backdrop-filter: blur(4px);
+    }
+
+    /* Ripple effect on hover */
+    .product-ripple {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .ripple-circle {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      background: radial-gradient(circle, rgba(201, 169, 110, 0.15), transparent 70%);
+      animation: ripple-expand 0.8s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-expand {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    .product-body {
+      padding: 1.5rem;
+    }
+
+    .product-brand {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-ml {
+      font-size: 0.6rem;
+      opacity: 0.4;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .product-prices {
+      margin-bottom: 1.2rem;
+    }
+
+    .price-boutique-regular {
+      font-size: 0.65rem;
+      opacity: 0.4;
+      text-decoration: line-through;
+      letter-spacing: 0.05em;
+    }
+
+    .price-boutique-regular span {
+      font-size: 0.6rem;
+    }
+
+    .price-ags {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--obsidian);
+      letter-spacing: -0.02em;
+    }
+
+    .price-ags-label {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-top: -0.2rem;
+    }
+
+    .price-quote {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .product-add-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--obsidian);
+      color: var(--alabaster);
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+
+    .product-add-btn::after {
+      content: '✓ Añadido';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold);
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .product-add-btn.added::after {
+      transform: translateY(0);
+    }
+
+    .product-add-btn:hover:not(.added) {
+      background: #333;
+    }
+
+    .product-quote-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: transparent;
+      color: var(--obsidian);
+      border: 1px solid var(--pearl);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .product-quote-btn:hover {
+      border-color: var(--wa);
+      color: var(--wa);
+    }
+
+    /* === POPUP === */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(26, 26, 26, 0.4);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .popup-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .popup {
+      background: var(--alabaster);
+      max-width: 480px;
+      width: 100%;
+      padding: 2.5rem;
+      position: relative;
+      transform: translateY(40px);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .popup-overlay.show .popup {
+      transform: translateY(0);
+    }
+
+    .popup-type {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .popup-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 0.3rem;
+    }
+
+    .popup-price {
+      font-size: 1.2rem;
+      color: var(--gold);
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .popup-desc {
+      font-size: 0.72rem;
+      line-height: 1.7;
+      opacity: 0.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .popup-actions {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .popup-cta {
+      flex: 1;
+      padding: 0.9rem 1rem;
+      background: var(--obsidian);
+      color: white;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+
+    .popup-cta:hover {
+      background: var(--gold);
+    }
+
+    .popup-cta.ghost {
+      background: transparent;
+      color: var(--obsidian);
+      border: 1px solid var(--pearl);
+    }
+
+    .popup-cta.ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: transparent;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+
+    .popup-close:hover {
+      opacity: 1;
+    }
+
+    .popup-tag {
+      position: absolute;
+      top: -1px;
+      left: 2rem;
+      background: var(--gold);
+      color: white;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+    }
+
+    /* === MAGIC RIPPLE ADD TO CART === */
+    .magic-burst {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 169, 110, 0.6), transparent 70%);
+      transform: translate(-50%, -50%) scale(0);
+      animation: magic-burst 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes magic-burst {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+      }
+
+      60% {
+        transform: translate(-50%, -50%) scale(3);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(5);
+        opacity: 0;
+      }
+    }
+
+    /* === CART SIDEBAR === */
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 300;
+      width: min(420px, 100vw);
+      background: var(--alabaster);
+      border-left: 1px solid var(--pearl);
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.08);
+    }
+
+    .cart-sidebar.open {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 2rem;
+      border-bottom: 1px solid var(--pearl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cart-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
+
+    .cart-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .cart-close:hover {
+      opacity: 1;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--pearl);
+      align-items: center;
+      animation: item-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes item-in {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .cart-item-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-brand {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .cart-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+    }
+
+    .cart-item-price {
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 0.2rem;
+    }
+
+    .cart-item-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      opacity: 0.3;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+      flex-shrink: 0;
+    }
+
+    .cart-item-remove:hover {
+      opacity: 1;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .cart-empty p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      opacity: 0.4;
+    }
+
+    .cart-footer {
+      padding: 2rem;
+      border-top: 1px solid var(--pearl);
+    }
+
+    .cart-notice {
+      background: var(--champagne);
+      padding: 1rem;
+      font-size: 0.65rem;
+      line-height: 1.6;
+      opacity: 0.8;
+      margin-bottom: 1.2rem;
+      border-left: 3px solid var(--gold);
+    }
+
+    .cart-geo {
+      font-size: 0.6rem;
+      text-align: center;
+      opacity: 0.4;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .cart-wa-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--wa);
+      color: white;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      transition: filter 0.25s, transform 0.2s;
+    }
+
+    .cart-wa-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+    }
+
+    /* === WA FLOATING === */
+    .wa-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 150;
+      width: 58px;
+      height: 58px;
+      background: var(--wa);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      cursor: pointer;
+      text-decoration: none;
+      animation: wa-pulse 3s ease-in-out infinite;
+      transition: transform 0.2s;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes wa-pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 4px 35px rgba(37, 211, 102, 0.7);
+      }
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: var(--obsidian);
+      color: var(--alabaster);
+      padding: 4rem 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-logo span {
+      color: var(--gold);
+    }
+
+    .footer-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      opacity: 0.3;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-geo {
+      font-size: 0.7rem;
+      opacity: 0.5;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-phone {
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-copy {
+      font-size: 0.6rem;
+      opacity: 0.2;
+      margin-top: 3rem;
+    }
+
+    /* === OVERLAY for cart === */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      background: rgba(26, 26, 26, 0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+      backdrop-filter: blur(2px);
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .catalog-section {
+        padding: 4rem 1rem;
+      }
+
+      .guide-section {
+        padding: 4rem 1rem;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      }
+    }
+
+    /* Staggered card animation on reveal */
+    .product-card {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.4s, box-shadow 0.4s;
+    }
+
+    .product-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .product-card:hover {
+      opacity: 1 !important;
+      transform: translateY(-6px) !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Particles -->
+  <div id="particles"></div>
+
+  <!-- Cart Overlay -->
+  <div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h2>Tu Selección</h2>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <p>Tu carrito está vacío.<br>Descubre una esencia.</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-notice">
+        ⚠️ Los precios se confirman antes de cada pedido. Escríbenos al <strong>492 172 5845</strong> para confirmar
+        disponibilidad y precio final.
+      </div>
+      <p class="cart-geo">📍 Entregas exclusivas en Aguascalientes, México</p>
+      <button class="cart-wa-btn" onclick="sendToWhatsApp()">
+        📲 Confirmar pedido por WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup" id="popup">
+      <div class="popup-tag" id="popupTag">Oferta Especial</div>
+      <button class="popup-close" onclick="closePopup()">✕</button>
+      <div class="popup-type" id="popupType"></div>
+      <div class="popup-title" id="popupTitle"></div>
+      <div class="popup-price" id="popupPrice"></div>
+      <div class="popup-desc" id="popupDesc"></div>
+      <div class="popup-actions">
+        <button class="popup-cta" onclick="addFromPopup()">Añadir al carrito</button>
+        <button class="popup-cta ghost" onclick="closePopup()">Explorar más</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <a href="#" class="nav-logo">Boutique<span>.Ags</span></a>
+    <ul class="nav-links">
+      <li><a href="#catalogo">Catálogo</a></li>
+      <li><a href="#guia">Tipos</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="cart-btn" onclick="toggleCart()">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Aguascalientes · Arte & Fragancia</p>
+      <h1 class="hero-title">El perfume que<br>te <em>define</em></h1>
+      <p class="hero-sub">Una selección curada de las mejores fragancias del mundo, disponible exclusivamente en
+        Aguascalientes.</p>
+      <div class="hero-cta">
+        <a href="#catalogo" class="btn-primary">Explorar esencias</a>
+        <a href="https://wa.me/524921725845?text=Hola%2C%20me%20interesa%20cotizar%20una%20fragancia" target="_blank"
+          class="btn-ghost">Cotizar con experto</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Descender</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- GUIDE -->
+  <section class="guide-section" id="guia">
+    <div style="max-width:1100px;margin:0 auto;position:relative;">
+      <div class="section-header">
+        <span class="section-label">Educación olfativa</span>
+        <h2 class="section-title">Conoce tu <em>esencia</em></h2>
+      </div>
+      <div class="guide-grid">
+        <div class="guide-card">
+          <div class="guide-type">EDT</div>
+          <div class="guide-concentration">5% — 15% concentración</div>
+          <div class="guide-bar-wrap">
+            <div class="guide-bar" data-width="40%"></div>
+          </div>
+          <div class="guide-hours">4–6h</div>
+          <p class="guide-desc">Ligero y fresco, ideal para uso diario o climas cálidos. La opción más accesible para
+            explorar una fragancia.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-type">EDP</div>
+          <div class="guide-concentration">15% — 20% concentración</div>
+          <div class="guide-bar-wrap">
+            <div class="guide-bar" data-width="62%"></div>
+          </div>
+          <div class="guide-hours">6–8h</div>
+          <p class="guide-desc">Más intensa y duradera que el EDT. Ideal para ocasiones especiales y climas fríos.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-type">Parfum</div>
+          <div class="guide-concentration">20% — 30% concentración</div>
+          <div class="guide-bar-wrap">
+            <div class="guide-bar" data-width="85%"></div>
+          </div>
+          <div class="guide-hours">8–12h+</div>
+          <p class="guide-desc">La forma más concentrada y lujosa. Un aroma intenso que permanece en la piel durante
+            todo el día.</p>
+        </div>
+        <div class="guide-card">
+          <div class="guide-type">Le Parfum</div>
+          <div class="guide-concentration">Máxima sofisticación</div>
+          <div class="guide-bar-wrap">
+            <div class="guide-bar" data-width="100%"></div>
+          </div>
+          <div class="guide-hours">12h+</div>
+          <p class="guide-desc">Sinónimo de máxima calidad. Una reformulación exclusiva y refinada del perfume original,
+            para quien busca lo extraordinario.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATALOG -->
+  <section class="catalog-section" id="catalogo">
+    <div class="section-header">
+      <span class="section-label">Colección 2024</span>
+      <h2 class="section-title">Fragancias <em>selectas</em></h2>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterGender('todos', this)">Todos</button>
+      <button class="filter-tab" onclick="filterGender('caballero', this)">Caballero</button>
+      <button class="filter-tab" onclick="filterGender('dama', this)">Dama</button>
+    </div>
+
+    <div class="brand-filter" id="brandFilter"></div>
+
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section style="padding:7rem 3rem;background:var(--champagne);text-align:center;" id="nosotros">
+    <div style="max-width:600px;margin:0 auto;">
+      <span class="section-label">Boutique.Ags</span>
+      <h2 class="section-title" style="margin-bottom:1.5rem;">Una experiencia, no<br>solo una <em>compra</em></h2>
+      <p style="font-size:0.8rem;line-height:1.9;opacity:0.6;margin-bottom:2rem;">
+        Somos más que una perfumería. Somos curadores de momentos. Cada fragancia en nuestro catálogo fue elegida para
+        evocar algo: un recuerdo, un sentimiento, una versión de ti que aún no conoces.
+      </p>
+      <p style="font-size:0.75rem;opacity:0.5;margin-bottom:0.5rem;">📍 Entregas exclusivas en Aguascalientes, México
+      </p>
+      <p style="font-size:0.75rem;opacity:0.5;margin-bottom:2rem;">📲 492 172 5845 · Pedidos, cotizaciones y fragancias
+        no listadas</p>
+      <a href="https://wa.me/524921725845?text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20una%20fragancia%20%C3%A1rabe%20o%20de%20nicho"
+        target="_blank" class="btn-primary">Cotizar árabe o nicho</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Boutique<span>.Ags</span></div>
+    <p class="footer-sub">El Arte de la Fragancia</p>
+    <p class="footer-geo">📍 Aguascalientes, México — Entregas locales únicamente</p>
+    <p class="footer-phone">492 172 5845</p>
+    <p class="footer-copy">© 2024 Boutique.Ags · Todos los derechos reservados</p>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a class="wa-float" href="https://wa.me/524921725845?text=Hola%2C%20me%20gustar%C3%ADa%20cotizar%20una%20fragancia"
+    target="_blank" title="Contactar por WhatsApp">📲</a>
+
+  <script>
+    // ========================
+    // DATA
+    // ========================
+    const products = [
+      // VERSACE
+      { id: 1, brand: 'Versace', name: 'Eros', type: 'EDT', ml: '100ML', price: 1799, boutique: 2540, gender: 'caballero', icon: '🏛️' },
+      { id: 2, brand: 'Versace', name: 'Eros', type: 'EDP', ml: '100ML', price: 2100, boutique: 2970, gender: 'caballero', icon: '🏛️' },
+      { id: 3, brand: 'Versace', name: 'Eros', type: 'Parfum', ml: '100ML', price: 2399, boutique: 3400, gender: 'caballero', icon: '🏛️' },
+      { id: 4, brand: 'Versace', name: 'Eros Flame', type: 'EDP', ml: '100ML', price: 2250, boutique: 2970, gender: 'caballero', icon: '🔥' },
+      { id: 5, brand: 'Versace', name: 'The Dreamer', type: 'EDT', ml: '100ML', price: 1350, boutique: 1620, gender: 'caballero', icon: '✨' },
+      { id: 6, brand: 'Versace', name: 'Dylan Blue', type: 'EDT', ml: '100ML', price: 1799, boutique: 2540, gender: 'caballero', icon: '🌊' },
+      { id: 7, brand: 'Versace', name: 'Pour Homme', type: 'EDT', ml: '100ML', price: 1699, boutique: 2540, gender: 'caballero', icon: '🏛️' },
+      { id: 8, brand: 'Versace', name: 'Crystal', type: 'EDT', ml: '90ML', price: 1999, boutique: 2900, gender: 'dama', icon: '💎' },
+      // JEAN PAUL GAULTIER
+      { id: 9, brand: 'Jean Paul Gaultier', name: 'Le Male Elixir', type: 'Parfum', ml: '125ML', price: 2999, boutique: 3200, gender: 'caballero', icon: '⚓' },
+      { id: 10, brand: 'Jean Paul Gaultier', name: 'Le Male', type: 'Le Parfum', ml: '125ML', price: 2900, boutique: 3000, gender: 'caballero', icon: '⚓' },
+      { id: 11, brand: 'Jean Paul Gaultier', name: 'Le Beau', type: 'Le Parfum', ml: '125ML', price: 2999, boutique: 3280, gender: 'caballero', icon: '🌊' },
+      { id: 12, brand: 'Jean Paul Gaultier', name: 'Le Male', type: 'EDT', ml: '125ML', price: 2200, boutique: 2760, gender: 'caballero', icon: '⚓' },
+      { id: 13, brand: 'Jean Paul Gaultier', name: 'Ultra Male', type: 'EDT', ml: '125ML', price: 2750, boutique: 2850, gender: 'caballero', icon: '⚓' },
+      { id: 14, brand: 'Jean Paul Gaultier', name: 'Scandal H', type: 'EDT', ml: '100ML', price: 2550, boutique: 2910, gender: 'caballero', icon: '💫' },
+      { id: 15, brand: 'Jean Paul Gaultier', name: 'Scandal Absolu', type: 'EDP', ml: '100ML', price: 3200, boutique: 3660, gender: 'caballero', icon: '💫' },
+      { id: 16, brand: 'Jean Paul Gaultier', name: 'Scandal H Le Parfum', type: 'Le Parfum', ml: '100ML', price: 2550, boutique: 3200, gender: 'caballero', icon: '💫' },
+      { id: 17, brand: 'Jean Paul Gaultier', name: 'Divine', type: 'EDP', ml: '100ML', price: 2990, boutique: 3600, gender: 'dama', icon: '👑' },
+      { id: 18, brand: 'Jean Paul Gaultier', name: 'La Belle Paradise', type: 'EDP', ml: '100ML', price: 2650, boutique: 3590, gender: 'dama', icon: '🌸' },
+      { id: 19, brand: 'Jean Paul Gaultier', name: 'La Belle', type: 'Le Parfum', ml: '100ML', price: 2550, boutique: 3490, gender: 'dama', icon: '🌸' },
+      { id: 20, brand: 'Jean Paul Gaultier', name: 'Scandal D Le Parfum', type: 'EDP', ml: '80ML', price: 2650, boutique: 3590, gender: 'dama', icon: '💫' },
+      // CAROLINA HERRERA
+      { id: 21, brand: 'Carolina Herrera', name: 'Bad Boy', type: 'EDT', ml: '100ML', price: 2200, boutique: 2800, gender: 'caballero', icon: '🦇' },
+      { id: 22, brand: 'Carolina Herrera', name: 'Bad Boy Cobalt', type: 'EDP', ml: '100ML', price: 2299, boutique: 3680, gender: 'caballero', icon: '💙' },
+      { id: 23, brand: 'Carolina Herrera', name: 'Bad Boy Le Parfum', type: 'Le Parfum', ml: '100ML', price: 2399, boutique: 3080, gender: 'caballero', icon: '🦇' },
+      { id: 24, brand: 'Carolina Herrera', name: 'Bad Boy Extreme', type: 'EDP', ml: '100ML', price: 2399, boutique: 3080, gender: 'caballero', icon: '🦇' },
+      { id: 25, brand: 'Carolina Herrera', name: '212 Men NYC', type: 'EDT', ml: '100ML', price: 1949, boutique: 2470, gender: 'caballero', icon: '🏙️' },
+      { id: 26, brand: 'Carolina Herrera', name: '212 VIP Black', type: 'EDP', ml: '100ML', price: 2150, boutique: 2650, gender: 'caballero', icon: '⬛' },
+      { id: 27, brand: 'Carolina Herrera', name: 'CH Men', type: 'EDT', ml: '100ML', price: 2100, boutique: 2710, gender: 'caballero', icon: '🎩' },
+      { id: 28, brand: 'Carolina Herrera', name: 'Good Girl', type: 'EDP', ml: '80ML', price: 2680, boutique: 3230, gender: 'dama', icon: '👠' },
+      { id: 29, brand: 'Carolina Herrera', name: 'Good Girl Blush', type: 'EDP', ml: '80ML', price: 2750, boutique: 3550, gender: 'dama', icon: '🌸' },
+      { id: 30, brand: 'Carolina Herrera', name: 'Very Good Girl', type: 'EDP', ml: '80ML', price: 2750, boutique: 3550, gender: 'dama', icon: '💕' },
+      { id: 31, brand: 'Carolina Herrera', name: 'Good Girl Blush Elixir', type: 'EDP', ml: '80ML', price: 2849, boutique: 3720, gender: 'dama', icon: '💋' },
+      { id: 32, brand: 'Carolina Herrera', name: 'Very Good Girl Glam', type: 'EDP', ml: '80ML', price: 2899, boutique: 3720, gender: 'dama', icon: '✨' },
+      { id: 33, brand: 'Carolina Herrera', name: 'Tradicional', type: 'EDT', ml: '100ML', price: 1949, boutique: 3180, gender: 'dama', icon: '🌺' },
+      { id: 34, brand: 'Carolina Herrera', name: '212 NYC', type: 'EDT', ml: '100ML', price: 2399, boutique: 2950, gender: 'dama', icon: '🗽' },
+      { id: 35, brand: 'Carolina Herrera', name: '212 VIP Rosé', type: 'EDP', ml: '80ML', price: 2480, boutique: 3090, gender: 'dama', icon: '🌹' },
+      { id: 36, brand: 'Carolina Herrera', name: '212 Heroes For Her', type: 'EDP', ml: '80ML', price: 2290, boutique: 3090, gender: 'dama', icon: '⚡' },
+      // PACO RABANNE
+      { id: 37, brand: 'Paco Rabanne', name: 'Invictus', type: 'EDT', ml: '100ML', price: 2050, boutique: 2710, gender: 'caballero', icon: '🏆' },
+      { id: 38, brand: 'Paco Rabanne', name: 'Invictus Victory', type: 'EDP', ml: '100ML', price: 2400, boutique: 3120, gender: 'caballero', icon: '🏆' },
+      { id: 39, brand: 'Paco Rabanne', name: 'Invictus', type: 'Parfum', ml: '100ML', price: 2550, boutique: 3120, gender: 'caballero', icon: '🏆' },
+      { id: 40, brand: 'Paco Rabanne', name: 'Invictus Victory Elixir', type: 'Parfum', ml: '100ML', price: 2499, boutique: 3250, gender: 'caballero', icon: '⚡' },
+      { id: 41, brand: 'Paco Rabanne', name: 'Invictus Platinum', type: 'EDP', ml: '100ML', price: 2199, boutique: 2980, gender: 'caballero', icon: '🌟' },
+      { id: 42, brand: 'Paco Rabanne', name: 'One Million Lucky', type: 'EDT', ml: '100ML', price: 3550, boutique: 3700, gender: 'caballero', icon: '🍀' },
+      { id: 43, brand: 'Paco Rabanne', name: 'One Million Elixir', type: 'EDP', ml: '100ML', price: 2450, boutique: 3250, gender: 'caballero', icon: '💰' },
+      { id: 44, brand: 'Paco Rabanne', name: 'One Million Royal', type: 'EDP', ml: '100ML', price: 2399, boutique: 3120, gender: 'caballero', icon: '👑' },
+      { id: 45, brand: 'Paco Rabanne', name: 'Phantom', type: 'EDT', ml: '100ML', price: 2450, boutique: 2770, gender: 'caballero', icon: '🤖' },
+      { id: 46, brand: 'Paco Rabanne', name: 'Phantom', type: 'Parfum', ml: '100ML', price: 2750, boutique: 3200, gender: 'caballero', icon: '🤖' },
+      { id: 47, brand: 'Paco Rabanne', name: 'Lady Million', type: 'EDP', ml: '80ML', price: null, boutique: 3110, gender: 'dama', icon: '👑' },
+      { id: 48, brand: 'Paco Rabanne', name: 'Lady Million Royal', type: 'EDP', ml: '80ML', price: null, boutique: 3110, gender: 'dama', icon: '💎' },
+      { id: 49, brand: 'Paco Rabanne', name: 'Lady Million Fabulous', type: 'EDP', ml: '80ML', price: null, boutique: 3360, gender: 'dama', icon: '✨' },
+      { id: 50, brand: 'Paco Rabanne', name: 'Lady Million Empire', type: 'EDP', ml: '80ML', price: null, boutique: 2800, gender: 'dama', icon: '🏰' },
+      { id: 51, brand: 'Paco Rabanne', name: 'Million Gold', type: 'EDP', ml: '90ML', price: null, boutique: 3580, gender: 'dama', icon: '🥇' },
+      // YSL
+      { id: 52, brand: 'YSL', name: 'Y', type: 'EDP', ml: '100ML', price: 2550, boutique: 3420, gender: 'caballero', icon: '🔷' },
+      { id: 53, brand: 'YSL', name: 'Y Intense', type: 'EDP', ml: '100ML', price: 2990, boutique: 3700, gender: 'caballero', icon: '🔷' },
+      { id: 54, brand: 'YSL', name: 'Y Le Parfum', type: 'Le Parfum', ml: '100ML', price: 3590, boutique: 3970, gender: 'caballero', icon: '⭐' },
+      { id: 55, brand: 'YSL', name: 'Libre', type: 'EDP', ml: '90ML', price: 3310, boutique: 3650, gender: 'dama', icon: '🦋' },
+      { id: 56, brand: 'YSL', name: 'Opium', type: 'EDP', ml: '90ML', price: 3400, boutique: 3650, gender: 'dama', icon: '🌙' },
+      { id: 57, brand: 'YSL', name: 'Mon Paris', type: 'EDP', ml: '90ML', price: 2600, boutique: 3650, gender: 'dama', icon: '🗼' },
+      // AZZARO
+      { id: 58, brand: 'Azzaro', name: 'Wanted', type: 'EDT', ml: '100ML', price: 1199, boutique: 1700, gender: 'caballero', icon: '🌵' },
+      { id: 59, brand: 'Azzaro', name: 'Wanted', type: 'EDP', ml: '100ML', price: null, boutique: 2710, gender: 'caballero', icon: '🌵' },
+      { id: 60, brand: 'Azzaro', name: 'Most Wanted', type: 'Parfum', ml: '100ML', price: 2250, boutique: 2850, gender: 'caballero', icon: '⭐' },
+      { id: 61, brand: 'Azzaro', name: 'Most Wanted Intense', type: 'EDP', ml: '100ML', price: 2099, boutique: 2750, gender: 'caballero', icon: '🔥' },
+      { id: 62, brand: 'Azzaro', name: 'Wanted Girl', type: 'Loción', ml: '80ML', price: 1450, boutique: 1900, gender: 'dama', icon: '💚' },
+      // VALENTINO
+      { id: 63, brand: 'Valentino', name: 'Born in Roma EDT', type: 'EDT', ml: '100ML', price: 2790, boutique: 2850, gender: 'caballero', icon: '🐻' },
+      { id: 64, brand: 'Valentino', name: 'Born in Roma Intense', type: 'EDT', ml: '100ML', price: null, boutique: 3590, gender: 'caballero', icon: '🏛️' },
+      { id: 65, brand: 'Valentino', name: 'Born in Roma Coral', type: 'EDT', ml: '100ML', price: 2790, boutique: 2850, gender: 'caballero', icon: '🐚' },
+      { id: 66, brand: 'Valentino', name: 'Born in Roma Yellow Dream', type: 'EDT', ml: '100ML', price: 2650, boutique: 2850, gender: 'caballero', icon: '🌻' },
+      { id: 67, brand: 'Valentino', name: 'Born in Roma', type: 'EDP', ml: '100ML', price: null, boutique: 3650, gender: 'dama', icon: '🌸' },
+      { id: 68, brand: 'Valentino', name: 'Born in Roma Coral', type: 'EDP', ml: '100ML', price: 3250, boutique: 3650, gender: 'dama', icon: '🐚' },
+      { id: 69, brand: 'Valentino', name: 'Born in Roma Intense', type: 'EDP', ml: '100ML', price: null, boutique: 3750, gender: 'dama', icon: '🌹' },
+      { id: 70, brand: 'Valentino', name: 'Donna', type: 'EDP', ml: '100ML', price: null, boutique: 3650, gender: 'dama', icon: '💋' },
+      { id: 71, brand: 'Valentino', name: 'Voce Viva', type: 'EDP', ml: '100ML', price: 2600, boutique: 3650, gender: 'dama', icon: '🎵' },
+      { id: 72, brand: 'Valentino', name: 'Born in Roma The Gold', type: 'EDP', ml: '100ML', price: null, boutique: 3490, gender: 'dama', icon: '🥇' },
+      { id: 73, brand: 'Valentino', name: 'Born in Roma Yellow Dream D', type: 'EDP', ml: '100ML', price: 2999, boutique: 3650, gender: 'dama', icon: '🌻' },
+      // DIOR
+      { id: 74, brand: 'Dior', name: 'Sauvage', type: 'EDT', ml: '100ML', price: 2650, boutique: 2820, gender: 'caballero', icon: '🏜️' },
+      { id: 75, brand: 'Dior', name: 'Sauvage', type: 'EDP', ml: '100ML', price: 3150, boutique: 3420, gender: 'caballero', icon: '🏜️' },
+      { id: 76, brand: 'Dior', name: 'Sauvage', type: 'Parfum', ml: '100ML', price: 3599, boutique: 4020, gender: 'caballero', icon: '🌌' },
+      { id: 77, brand: 'Dior', name: 'Sauvage', type: 'Parfum', ml: '200ML', price: 4399, boutique: 5550, gender: 'caballero', icon: '🌌' },
+      { id: 78, brand: 'Dior', name: 'Homme', type: 'EDT', ml: '100ML', price: 2499, boutique: 2820, gender: 'caballero', icon: '🎩' },
+      { id: 79, brand: 'Dior', name: 'Homme Cologne', type: 'Cologne', ml: '100ML', price: 2499, boutique: 2930, gender: 'caballero', icon: '🎩' },
+      { id: 80, brand: 'Dior', name: 'Homme Sport', type: 'EDT', ml: '125ML', price: 2550, boutique: 2930, gender: 'caballero', icon: '⚽' },
+      { id: 81, brand: 'Dior', name: 'Homme Intense', type: 'EDP', ml: '100ML', price: 2999, boutique: 3420, gender: 'caballero', icon: '🎩' },
+      { id: 82, brand: 'Dior', name: 'Miss Dior', type: 'EDP', ml: '100ML', price: 2599, boutique: 2990, gender: 'dama', icon: '🌸' },
+      { id: 83, brand: 'Dior', name: 'Miss Dior Blooming', type: 'EDT', ml: '100ML', price: 2750, boutique: 2990, gender: 'dama', icon: '🌺' },
+      { id: 84, brand: 'Dior', name: "J'Adore", type: 'EDP', ml: '100ML', price: 3150, boutique: 3680, gender: 'dama', icon: '💛' },
+      // GIORGIO ARMANI
+      { id: 85, brand: 'Giorgio Armani', name: 'Acqua di Gio', type: 'EDT', ml: '100ML', price: 2150, boutique: 2800, gender: 'caballero', icon: '🌊' },
+      { id: 86, brand: 'Giorgio Armani', name: 'Acqua di Gio', type: 'EDP', ml: '100ML', price: 3099, boutique: 3300, gender: 'caballero', icon: '🌊' },
+      { id: 87, brand: 'Giorgio Armani', name: 'Acqua di Gio', type: 'Parfum', ml: '100ML', price: 3150, boutique: 3750, gender: 'caballero', icon: '💧' },
+      { id: 88, brand: 'Giorgio Armani', name: 'Sì', type: 'EDP', ml: '100ML', price: null, boutique: 3650, gender: 'dama', icon: '🌺' },
+      { id: 89, brand: 'Giorgio Armani', name: 'My Way', type: 'EDP', ml: '90ML', price: null, boutique: 3650, gender: 'dama', icon: '✈️' },
+      { id: 90, brand: 'Giorgio Armani', name: 'Acqua di Gio D', type: 'EDT', ml: '100ML', price: 2100, boutique: 2960, gender: 'dama', icon: '🌊' },
+      // EMPORIO ARMANI
+      { id: 91, brand: 'Emporio Armani', name: 'Stronger With You Intensely', type: 'EDP', ml: '100ML', price: 2830, boutique: 2990, gender: 'caballero', icon: '❤️' },
+      { id: 92, brand: 'Emporio Armani', name: 'Stronger With You', type: 'EDT', ml: '100ML', price: 2550, boutique: 2650, gender: 'caballero', icon: '💛' },
+      { id: 93, brand: 'Emporio Armani', name: 'In Love With You', type: 'EDP', ml: '100ML', price: null, boutique: 2870, gender: 'dama', icon: '💕' },
+      { id: 94, brand: 'Emporio Armani', name: 'Because of You', type: 'EDP', ml: '100ML', price: null, boutique: 3150, gender: 'dama', icon: '🌹' },
+      // GUCCI
+      { id: 95, brand: 'Gucci', name: 'Guilty', type: 'EDP', ml: '90ML', price: 2780, boutique: 3450, gender: 'caballero', icon: '🐍' },
+      { id: 96, brand: 'Gucci', name: 'Guilty', type: 'EDT', ml: '90ML', price: null, boutique: 2900, gender: 'caballero', icon: '🐍' },
+      { id: 97, brand: 'Gucci', name: 'Bloom', type: 'EDP', ml: '100ML', price: 2790, boutique: 3800, gender: 'dama', icon: '🌸' },
+      { id: 98, brand: 'Gucci', name: 'Bloom', type: 'EDT', ml: '100ML', price: 2899, boutique: 3350, gender: 'dama', icon: '🌸' },
+      { id: 99, brand: 'Gucci', name: 'Flora Gardenia', type: 'EDP', ml: '100ML', price: 3200, boutique: 3800, gender: 'dama', icon: '🌻' },
+      { id: 100, brand: 'Gucci', name: 'Guilty D', type: 'EDP', ml: '90ML', price: null, boutique: 3650, gender: 'dama', icon: '💫' },
+      // HUGO BOSS
+      { id: 101, brand: 'Hugo Boss', name: 'Night', type: 'EDT', ml: '100ML', price: 1799, boutique: 2200, gender: 'caballero', icon: '🌙' },
+      { id: 102, brand: 'Hugo Boss', name: 'Bottled', type: 'EDT', ml: '100ML', price: 1830, boutique: 2850, gender: 'caballero', icon: '🍎' },
+      { id: 103, brand: 'Hugo Boss', name: 'Infinite', type: 'EDP', ml: '100ML', price: 2190, boutique: 3050, gender: 'caballero', icon: '∞' },
+      { id: 104, brand: 'Hugo Boss', name: 'Bottled', type: 'EDP', ml: '100ML', price: 1930, boutique: 3250, gender: 'caballero', icon: '🍎' },
+      { id: 105, brand: 'Hugo Boss', name: 'Bottled', type: 'Parfum', ml: '100ML', price: 2190, boutique: 3500, gender: 'caballero', icon: '🍎' },
+      { id: 106, brand: 'Hugo Boss', name: 'The Scent', type: 'EDT', ml: '100ML', price: null, boutique: 3100, gender: 'caballero', icon: '🌿' },
+      { id: 107, brand: 'Hugo Boss', name: 'Bottled Tonic', type: 'EDT', ml: '100ML', price: 1999, boutique: 2850, gender: 'caballero', icon: '💧' },
+      { id: 108, brand: 'Hugo Boss', name: 'Bottled Night', type: 'EDT', ml: '100ML', price: 2200, boutique: 3300, gender: 'caballero', icon: '🌑' },
+      { id: 109, brand: 'Hugo Boss', name: 'The Scent', type: 'EDP', ml: '100ML', price: 2200, boutique: 3360, gender: 'caballero', icon: '🌿' },
+      { id: 110, brand: 'Hugo Boss', name: 'Elixir', type: 'Parfum', ml: '100ML', price: null, boutique: 3700, gender: 'caballero', icon: '⚗️' },
+      // LACOSTE
+      { id: 111, brand: 'Lacoste', name: 'L.12.12 Men', type: 'EDT', ml: '100ML', price: 1730, boutique: 2430, gender: 'caballero', icon: '🐊' },
+      { id: 112, brand: 'Lacoste', name: 'L.12.12 Men', type: 'EDP', ml: '100ML', price: 1899, boutique: 2650, gender: 'caballero', icon: '🐊' },
+    ];
+
+    const popupProducts = {
+      entry: [
+        products.find(p => p.name === 'The Dreamer'),
+        products.find(p => p.name === 'Wanted' && p.type === 'EDT'),
+        products.find(p => p.name === 'L.12.12 Men' && p.type === 'EDT'),
+        products.find(p => p.name === 'Night' && p.brand === 'Hugo Boss'),
+      ],
+      luxury: [
+        products.find(p => p.name === 'Sauvage' && p.ml === '200ML'),
+        products.find(p => p.name === 'Y Le Parfum'),
+        products.find(p => p.name === 'Opium'),
+        products.find(p => p.name === 'One Million Lucky'),
+      ]
+    };
+
+    // ========================
+    // STATE
+    // ========================
+    let cart = [];
+    let currentGender = 'todos';
+    let currentBrand = 'todas';
+    let currentPopupProduct = null;
+    let cartCount = 0;
+
+    // ========================
+    // PARTICLES
+    // ========================
+    function initParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 20; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (8 + Math.random() * 12) + 's';
+        p.style.animationDelay = (Math.random() * 15) + 's';
+        p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+        container.appendChild(p);
+      }
+    }
+
+    // ========================
+    // RENDER PRODUCTS
+    // ========================
+    function getBrands() {
+      const brands = [...new Set(products.map(p => p.brand))];
+      return brands.sort();
+    }
+
+    function renderBrandFilter() {
+      const container = document.getElementById('brandFilter');
+      const brands = getBrands();
+      container.innerHTML = `<button class="brand-tag active" onclick="filterBrand('todas', this)">Todas las marcas</button>` +
+        brands.map(b => `<button class="brand-tag" onclick="filterBrand('${b}', this)">${b}</button>`).join('');
+    }
+
+    function filterGender(gender, btn) {
+      currentGender = gender;
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts();
+    }
+
+    function filterBrand(brand, btn) {
+      currentBrand = brand;
+      document.querySelectorAll('.brand-tag').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts();
+    }
+
+    function renderProducts() {
+      let filtered = products;
+      if (currentGender !== 'todos') filtered = filtered.filter(p => p.gender === currentGender);
+      if (currentBrand !== 'todas') filtered = filtered.filter(p => p.brand === currentBrand);
+
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = filtered.map((p, i) => productCard(p, i)).join('');
+
+      // Animate in
+      setTimeout(() => {
+        document.querySelectorAll('.product-card').forEach((card, idx) => {
+          setTimeout(() => { card.classList.add('visible'); }, idx * 40);
+        });
+      }, 10);
+
+      // Animate guide bars
+      document.querySelectorAll('.guide-bar').forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+    }
+
+    function productCard(p, i) {
+      const hasSavings = p.price && p.boutique;
+      const savings = hasSavings ? p.boutique - p.price : 0;
+
+      const priceHTML = p.price
+        ? `<div class="product-prices">
+        <div class="price-boutique-regular"><span>Boutique regular:</span> $${p.boutique.toLocaleString()}</div>
+        <div class="price-ags">$${p.price.toLocaleString()}</div>
+        <span class="price-ags-label">Boutique.Ags${savings > 0 ? ` — ahorra $${savings.toLocaleString()}` : ''}</span>
+       </div>`
+        : `<div class="product-prices">
+        <div class="price-boutique-regular"><span>Boutique regular:</span> $${p.boutique ? p.boutique.toLocaleString() : '—'}</div>
+        <div class="price-quote">Precio a confirmar</div>
+       </div>`;
+
+      const actionBtn = p.price
+        ? `<button class="product-add-btn" id="addbtn-${p.id}" onclick="addToCart(${p.id}, event)">Añadir al carrito</button>`
+        : `<button class="product-quote-btn" onclick="quotePerfume('${p.brand} ${p.name} ${p.type}')">📲 Cotizar con experto</button>`;
+
+      return `<div class="product-card" style="transition-delay:${i * 30}ms" onclick="void(0)">
+    <div class="product-ripple" id="ripple-${p.id}"></div>
+    <div class="product-img-wrap">
+      <span class="product-gender-badge ${p.gender}">${p.gender}</span>
+      <span class="product-conc-badge">${p.type}</span>
+      <span class="product-icon">${p.icon}</span>
+    </div>
+    <div class="product-body">
+      <div class="product-brand">${p.brand}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-ml">${p.ml}</div>
+      ${priceHTML}
+      ${actionBtn}
+    </div>
+  </div>`;
+    }
+
+    // ========================
+    // CART
+    // ========================
+    function addToCart(id, event) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+
+      // Magic burst animation
+      const burst = document.createElement('div');
+      burst.className = 'magic-burst';
+      burst.style.left = event.clientX + 'px';
+      burst.style.top = event.clientY + 'px';
+      document.body.appendChild(burst);
+      setTimeout(() => burst.remove(), 900);
+
+      // Button feedback
+      const btn = document.getElementById('addbtn-' + id);
+      if (btn) {
+        btn.classList.add('added');
+        setTimeout(() => btn.classList.remove('added'), 1800);
+      }
+
+      // Ripple
+      const ripple = document.getElementById('ripple-' + id);
+      if (ripple) {
+        const circle = document.createElement('div');
+        circle.className = 'ripple-circle';
+        circle.style.width = circle.style.height = '200px';
+        circle.style.left = '50%'; circle.style.top = '50%';
+        circle.style.marginLeft = circle.style.marginTop = '-100px';
+        ripple.appendChild(circle);
+        setTimeout(() => circle.remove(), 900);
+      }
+
+      cart.push(p);
+      cartCount++;
+      updateCartCount();
+      closePopup();
+    }
+
+    function updateCartCount() {
+      const el = document.getElementById('cartCount');
+      el.textContent = cartCount;
+      el.classList.add('pulse');
+      setTimeout(() => el.classList.remove('pulse'), 500);
+    }
+
+    function removeFromCart(idx) {
+      cart.splice(idx, 1);
+      cartCount = Math.max(0, cartCount - 1);
+      updateCartCount();
+      renderCartItems();
+    }
+
+    function renderCartItems() {
+      const el = document.getElementById('cartItems');
+      if (cart.length === 0) {
+        el.innerHTML = '<div class="cart-empty"><p>Tu carrito está vacío.<br>Descubre una esencia.</p></div>';
+        return;
+      }
+      el.innerHTML = cart.map((p, i) => `
+    <div class="cart-item">
+      <div class="cart-item-icon">${p.icon}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-brand">${p.brand}</div>
+        <div class="cart-item-name">${p.name} ${p.type}</div>
+        <div class="cart-item-price">${p.price ? '$' + p.price.toLocaleString() : 'Precio por confirmar'}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart(${i})">✕</button>
+    </div>
+  `).join('');
+    }
+
+    function toggleCart() {
+      const sidebar = document.getElementById('cartSidebar');
+      const overlay = document.getElementById('cartOverlay');
+      const isOpen = sidebar.classList.contains('open');
+      sidebar.classList.toggle('open', !isOpen);
+      overlay.classList.toggle('show', !isOpen);
+      if (!isOpen) renderCartItems();
+    }
+
+    function sendToWhatsApp() {
+      if (cart.length === 0) {
+        alert('Agrega fragancias a tu carrito primero.');
+        return;
+      }
+      const items = cart.map(p => `• ${p.brand} ${p.name} ${p.type} ${p.ml}${p.price ? ' — $' + p.price.toLocaleString() : ' (precio por confirmar)'}`).join('\n');
+      const msg = `Hola, me interesa confirmar este pedido de Boutique.Ags:\n\n${items}\n\n¿Pueden confirmar disponibilidad y precio final? Entrega en Aguascalientes.`;
+      window.open('https://wa.me/524921725845?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    function quotePerfume(name) {
+      const msg = `Hola, quisiera cotizar: ${name}. ¿Tienen disponibilidad? Entrega en Aguascalientes.`;
+      window.open('https://wa.me/524921725845?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    // ========================
+    // POPUPS
+    // ========================
+    let popupShown = false;
+    let currentPopupType = 'entry';
+
+    function showPopup(type) {
+      const list = popupProducts[type].filter(Boolean);
+      if (!list.length) return;
+      const p = list[Math.floor(Math.random() * list.length)];
+      currentPopupProduct = p;
+
+      document.getElementById('popupTag').textContent = type === 'entry' ? '🔥 Acceso Especial' : '👑 Lujo Exclusivo';
+      document.getElementById('popupType').textContent = `${p.brand} · ${p.type} · ${p.ml}`;
+      document.getElementById('popupTitle').textContent = p.name;
+      document.getElementById('popupPrice').textContent = p.price ? `Boutique.Ags: $${p.price.toLocaleString()} (vs $${p.boutique.toLocaleString()} regular)` : `Consultar precio · Boutique: $${p.boutique.toLocaleString()}`;
+      document.getElementById('popupDesc').textContent = type === 'entry'
+        ? 'Una fragancia irresistible para comenzar tu colección. Precio exclusivo disponible por tiempo limitado en Boutique.Ags.'
+        : 'Una fragancia de alta gama que eleva cualquier momento a lo extraordinario. Ideal para quien no acepta lo común.';
+
+      document.getElementById('popupOverlay').classList.add('show');
+    }
+
+    function closePopup() {
+      document.getElementById('popupOverlay').classList.remove('show');
+    }
+
+    function addFromPopup() {
+      if (!currentPopupProduct) return;
+      if (currentPopupProduct.price) {
+        addToCart(currentPopupProduct.id, { clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 });
+      } else {
+        quotePerfume(currentPopupProduct.brand + ' ' + currentPopupProduct.name);
+        closePopup();
+      }
+    }
+
+    // ========================
+    // SCROLL / OBSERVERS
+    // ========================
+    function initScrollObserver() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            // Animate guide bars
+            e.target.querySelectorAll('.guide-bar').forEach(bar => {
+              bar.style.width = bar.dataset.width;
+            });
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.guide-card').forEach(el => observer.observe(el));
+    }
+
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('mainNav');
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+
+      // Show popup after scroll
+      if (!popupShown && window.scrollY > 400) {
+        popupShown = true;
+        // Rotate between entry and luxury
+        const type = Math.random() > 0.5 ? 'entry' : 'luxury';
+        setTimeout(() => showPopup(type), 800);
+
+        // Set up rotation for subsequent popups
+        setInterval(() => {
+          currentPopupType = currentPopupType === 'entry' ? 'luxury' : 'entry';
+          showPopup(currentPopupType);
+        }, 90000); // every 90s
+      }
+    });
+
+    // ========================
+    // INIT
+    // ========================
+    initParticles();
+    renderBrandFilter();
+    renderProducts();
+    initScrollObserver();
+
+    // Guide bars initial state (hidden until scrolled)
+    document.querySelectorAll('.guide-bar').forEach(bar => { bar.style.width = '0'; });
+  </script>
+</body>
+
+</html>
